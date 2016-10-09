@@ -1,0 +1,4 @@
+Image:
+  extensions:
+    - Sortable
+    - GalleryImageExtension
