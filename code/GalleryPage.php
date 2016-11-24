@@ -65,11 +65,10 @@ class GalleryPage_Controller extends Page_Controller
 	{
 		parent::init();
 		
-		Requirements::css('simplegallery/css/lightbox.css');
+		Requirements::css('simplegallery/vendor/lightbox/dist/css/lightbox.min.css');
 		Requirements::css('simplegallery/css/gallery.css');
 		Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
-		Requirements::javascript('simplegallery/js/modernizr.custom.js');
-		Requirements::javascript('simplegallery/js/lightbox-2.6.min.js');
+		Requirements::javascript('simplegallery/vendor/lightbox/dist/js/lightbox.min.js');
 		$this->RequireBootstrap();
 	}
 	
