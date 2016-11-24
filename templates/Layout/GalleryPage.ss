@@ -1,5 +1,5 @@
-<div class="row gallery-header">
-	<div class="col-xl-12">
+<div class="gallery-header $BootstrapRowCSSClass">
+	<div class="$BootstrapHeaderCSSClass">
 		<h1>$Title.XML</h1>
 		$Content
 		$Form

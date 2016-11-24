@@ -42,6 +42,11 @@ class GalleryImageExtension extends DataExtension
 		return GalleryPage::config()->get('use_bootstrap') ? 'row' : '';
 	}
 	
+	public function BootstrapHeaderCSSClass()
+	{
+		return GalleryPage::config()->get('use_bootstrap') ? 'col-xl-12' : '';
+	}
+	
 	public function BootstrapCSSColumnClasses()
 	{
 		if (!GalleryPage::config()->get('use_bootstrap')) return '';
