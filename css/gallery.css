@@ -1,10 +1,8 @@
 /* Image Gallery */
 div.gallery-image
 {
-	float:						left;
 	margin:						0 10px 10px;
 	font-style:					italic;
-	overflow:					hidden;
 }
 
 div.gallery-image p
@@ -12,9 +10,4 @@ div.gallery-image p
 	margin-bottom:					10px;
 	margin-top:					3px;
 	font-size:					90%;
-}
-
-div.gallery-end
-{
-	clear:						both;
 }
