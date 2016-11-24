@@ -37,8 +37,14 @@ class GalleryImageExtension extends DataExtension
 		return (int) GalleryImage::config()->get('thumbnail_height');
 	}
 	
+	public function BootstrapRowCSSClass()
+	{
+		return GalleryPage::config()->get('use_bootstrap') ? 'row' : '';
+	}
+	
 	public function BootstrapCSSColumnClasses()
 	{
+		if (!GalleryPage::config()->get('use_bootstrap')) return '';
 		$columns = GalleryImage::config()->get('thumbnail_cols');
 		$result = '';
 		foreach ($columns as $type => $size)
