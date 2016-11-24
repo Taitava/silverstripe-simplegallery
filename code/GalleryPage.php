@@ -128,7 +128,6 @@ class GalleryPage extends Page
 	 */
 	public function GroupedImages()
 	{
-		$this->Images()->setField('Group', null);
 		$images = array();
 		if ($this->Images()->exists())
 		{
@@ -140,7 +139,6 @@ class GalleryPage extends Page
 		/** @var GalleryImageGroup $group */
 		foreach ($this->GalleryImageGroups()->sort('SortOrder') as $group)
 		{
-			$group->Images()->setField('Group', $group);
 			$images[] = array(
 				'Title' => $group->Title,
 				'Images' => new ArrayList($group->Images()->sort('SortOrder')->toArray()),

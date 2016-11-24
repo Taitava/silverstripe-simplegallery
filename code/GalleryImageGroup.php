@@ -21,6 +21,12 @@ class GalleryImageGroup extends DataObject
 		'Images' => 'Image',
 	);
 	
+	private static $many_many_extraFields = array(
+		'Images' => array(
+			'SortOrder' => 'Int',
+		),
+	);
+	
 	private static $belongs_many_many = array(
 		'GalleryPages' => 'GalleryPage',
 	);
