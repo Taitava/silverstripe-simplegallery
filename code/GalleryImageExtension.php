@@ -13,7 +13,8 @@ class GalleryImageExtension extends DataExtension
 	);
 	
 	private static $belongs_many_many = array(
-		'GalleryPage'	=> 'GalleryPage',
+		'GalleryPage' => 'GalleryPage',
+		'GalleryImageGroups' => 'GalleryImageGroup',
 	);
 	
 	public function updateCMSFields(FieldList $fields)
@@ -35,16 +36,6 @@ class GalleryImageExtension extends DataExtension
 	public function GalleryThumbnailHeight()
 	{
 		return (int) GalleryImage::config()->get('thumbnail_height');
-	}
-	
-	public function BootstrapRowCSSClass()
-	{
-		return GalleryPage::config()->get('use_bootstrap') ? 'row' : '';
-	}
-	
-	public function BootstrapHeaderCSSClass()
-	{
-		return GalleryPage::config()->get('use_bootstrap') ? 'col-xl-12' : '';
 	}
 	
 	public function BootstrapCSSColumnClasses()

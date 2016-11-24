@@ -4,6 +4,7 @@
  * Class GalleryPage
  *
  * @method DataList Images()
+ * @method DataList GalleryImageGroups()
  */
 class GalleryPage extends Page
 {
@@ -32,12 +33,35 @@ class GalleryPage extends Page
 	 */
 	private static $require_bootstrap = false;
 	
+	
+	/**
+	 * If true, a single GalleryPage can be divided to multiple image sections. It's false by default to keep the default
+	 * setup simple as the module name suggests. :)
+	 *
+	 * @var bool
+	 */
+	private static $allow_image_groups = false;
+	
+	
+	/**
+	 * This option is used to control whether if it's possible to link images directly to a GalleryPage without using
+	 * an image group in between. If $allow_image_groups is false, then this option has no effect and direct images are
+	 * obviously always allowed.
+	 *
+	 * @var bool
+	 */
+	private static $allow_direct_images = false;
+	
 	private static $many_many = array(
 		'Images' => 'Image',
+		'GalleryImageGroups' => 'GalleryImageGroup',
 	);
 	
 	private static $many_many_extraFields = array(
 		'Images' => array(
+			'SortOrder' => 'Int',
+		),
+		'GalleryImageGroups' => array(
 			'SortOrder' => 'Int',
 		),
 	);
@@ -55,25 +79,99 @@ class GalleryPage extends Page
 	public function getCMSFields()
 	{
 		$fields = parent::getCMSFields();
-		$fields->removeFieldFromTab('Root.Main', 'RightContent');
-		$fields->removeFieldFromTab('Root.Main', 'HeaderImage');
-		$fields->addFieldToTab(
-			'Root.Main',
-			$uploadField = new SortableUploadField(
-				$name = 'Images',
-				$title = 'Gallerian kuvat'
-			),
-			'Content'
-		);
-		$uploadField->setAllowedMaxFileNumber(1000);
-		$uploadField->setFolderName('Galleria');
-		$uploadField->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif', 'tiff'));
-		$uploadField->setPreviewMaxWidth(126);
-		$uploadField->setPreviewMaxHeight(123);
-		$fields->removeByName('CombineSubpages');
+		
+		//Remove some fields
+		$fields->removeFieldFromTab('Root.Main', 'RightContent'); //TODO: what is this?
+		$fields->removeFieldFromTab('Root.Main', 'HeaderImage'); //TODO: what is this?
+		$fields->removeByName('CombineSubpages'); //TODO: what is this?
+		
+		if (self::DirectImagesAllowed()) $fields->addFieldToTab('Root.Main', self::NewUploadField(), 'Content');
+		if (self::ImageGroupsAllowed())
+		{
+			$grid_field_config = new GridFieldConfig_RecordEditor();
+			$grid_field = new GridField('GalleryImageGroups', 'Kuvaryhmät', $this->GalleryImageGroups(), $grid_field_config);
+			$fields->addFieldToTab('Root', new Tab('GalleryImageGroups', 'Kuvaryhmät'));
+			$fields->addFieldToTab('Root.GalleryImageGroups', $grid_field);
+			if (ClassInfo::exists('GridFieldSortableRows'))
+			{
+				$grid_field_config->addComponent(new GridFieldSortableRows('SortOrder'));
+			}
+		}
+		
 		return $fields;
 	}
 	
+	public static function DirectImagesAllowed()
+	{
+		return self::config()->get('allow_direct_images') || !self::config()->get('allow_image_groups');
+	}
+	
+	public static function ImageGroupsAllowed()
+	{
+		return self::config()->get('allow_image_groups');
+	}
+	
+	/**
+	 * Puts together images that are linked directly to this GalleryPage and images that are linked to this GalleryPage
+	 * via GalleryImageGroups. Note that this method does not use GroupedList! Instead it uses a custom ArrayList structure:
+	 * array(
+	 *   GroupID => array(
+	 *     'Title' => string
+	 *     'Images' => a <% loop %> able array of images in this group
+	 *   )
+	 * )
+	 *
+	 * If this GalleryPage contains any "direct images", those are placed in a pseudo group at the beginning of the
+	 * whole array. The pseudo group has no title.
+	 *
+	 * @return ArrayList
+	 */
+	public function GroupedImages()
+	{
+		$this->Images()->setField('Group', null);
+		$images = array();
+		if ($this->Images()->exists())
+		{
+			$images[] = array(
+				'Title' => '',
+				'Images' => new ArrayList($this->Images()->sort('SortOrder')->toArray()),
+			);
+		}
+		/** @var GalleryImageGroup $group */
+		foreach ($this->GalleryImageGroups()->sort('SortOrder') as $group)
+		{
+			$group->Images()->setField('Group', $group);
+			$images[] = array(
+				'Title' => $group->Title,
+				'Images' => new ArrayList($group->Images()->sort('SortOrder')->toArray()),
+			);
+		}
+		return new ArrayList($images);
+	}
+	
+	public function BootstrapHeaderCSSClass()
+	{
+		return GalleryPage::config()->get('use_bootstrap') ? 'col-xl-12' : '';
+	}
+	
+	public function BootstrapRowCSSClass()
+	{
+		return GalleryPage::config()->get('use_bootstrap') ? 'row' : '';
+	}
+	
+	public static function NewUploadField()
+	{
+		$upload_field = new SortableUploadField(
+			$name = 'Images',
+			$title = 'Gallerian kuvat'
+		);
+		$upload_field->setAllowedMaxFileNumber(1000);
+		$upload_field->setFolderName('Galleria');
+		$upload_field->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif', 'tiff'));
+		$upload_field->setPreviewMaxWidth(126);
+		$upload_field->setPreviewMaxHeight(123);
+		return $upload_field;
+	}
 }
 
 class GalleryPage_Controller extends Page_Controller
