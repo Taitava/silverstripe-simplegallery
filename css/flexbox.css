@@ -1,0 +1,21 @@
+
+div.gallery-images
+{
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	
+	justify-content: center;
+	align-items: center;
+}
+
+div.gallery-image
+{
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}

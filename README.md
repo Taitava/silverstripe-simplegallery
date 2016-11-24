@@ -10,7 +10,9 @@ These are the default values:
 
 ```YAML
 GalleryPage:
-  require_bootstrap: false #Set to true if your theme does not include bootstrap already.
+  use_bootstrap: true
+  use_flexbox: true #Better center images vertically and horizontally. Newest browsers support this in 2016.
+  require_bootstrap: false #Set to true if your theme does not include bootstrap already and if you want the module to inject boostrap classes to the GalleryPage. Has no effect if use_boostrap is false.
   
 GalleryImage:
   thumbnail_width: *your-custom-value in px*

@@ -8,6 +8,23 @@
 class GalleryPage extends Page
 {
 	/**
+	 * Whether to inject bootstrap CSS classes to GalleryPage content. You can perform well without this if you
+	 * set 'use_flexbox' to true, but only newest browsers support that. Both 'use_bootstrap' and 'use_flexbox' can
+	 * be used together, too.
+	 *
+	 * @conf bool
+	 */
+	private static $use_bootstrap = true;
+	
+	/**
+	 * Whether to use flexbox CSS rules to center images both horizontally and vertically. This solves problems if you
+	 * have images with different heights, but is only supported by newest browsers.
+	 *
+	 * @conf bool
+	 */
+	private static $use_flexbox = true;
+	
+	/**
 	 * If true, require Bootstrap's CSS and JS files from this module's vendor folder. If you have already included
 	 * bootstrap in your theme, keep this off.
 	 *
@@ -70,15 +87,24 @@ class GalleryPage_Controller extends Page_Controller
 		Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
 		Requirements::javascript('simplegallery/vendor/lightbox/dist/js/lightbox.min.js');
 		$this->RequireBootstrap();
+		$this->RequireFlexbox();
 	}
 	
 	private function RequireBootstrap()
 	{
-		if (GalleryPage::config()->get('require_bootstrap'))
+		if (GalleryPage::config()->get('require_bootstrap') && GalleryPage::config()->get('use_bootstrap'))
 		{
 			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap.min.css');
 			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap-theme.min.css');
 			Requirements::javascript('simplegallery/vendor/bootstrap/js/bootstrap.min.js');
+		}
+	}
+	
+	private function RequireFlexbox()
+	{
+		if (GalleryPage::config()->get('use_flexbox'))
+		{
+			Requirements::css('simplegallery/css/flexbox.css');
 		}
 	}
 }
