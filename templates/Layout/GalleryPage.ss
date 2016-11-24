@@ -8,10 +8,10 @@
 <div class="row gallery-images">
 	<% loop $Images.Sort('SortOrder') %>
 		<div class="gallery-image $BootstrapCSSColumnClasses">
-			<a href="$URL" data-lightbox="images-{$Up.URLSegment.XML}" title="$Caption.XML">
-				<img src="$GalleryThumbnail.URL" alt="$Caption" />
+			<a href="$URL" data-lightbox="gallery-images-{$Top.URLSegment.XML}" title="$Caption.XML">
+				<img src="$GalleryThumbnail.URL" alt="$Caption" class="img-responsive" />
 			</a>
-			<p>$Caption</p>
+			<p style="max-width: {$GalleryThumbnailWidth}px;">$Caption</p>
 		</div>
 	<% end_loop %>
 </div>
