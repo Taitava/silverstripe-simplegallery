@@ -37,10 +37,7 @@ class GalleryImageExtension extends DataExtension
 		return (int) GalleryImage::config()->get('thumbnail_height');
 	}
 	
-	public function GalleryThumbnailPlusCaptionHeight()
-	{
-		return $this->GalleryThumbnailHeight() + (int) GalleryImage::config()->get('caption_height');
-	}
+	
 	
 	
 }
