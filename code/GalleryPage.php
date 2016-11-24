@@ -49,18 +49,6 @@ class GalleryPage extends Page
 		return $fields;
 	}
 	
-	public function leftImages() //TODO: Are these used anywhere?? If not, remove them.
-	{
-		$count = $this->Images()->Count();
-		return $this->Images('','','', floor($count/2));
-	}
-	
-	public function rightImages() //TODO: Are these used anywhere?? If not, remove them.
-	{
-		$count = $this->Images()->Count();
-		return $this->Images('','','', floor($count/2).','.floor($count/2+1));
-	}
-	
 }
 
 class GalleryPage_Controller extends Page_Controller
