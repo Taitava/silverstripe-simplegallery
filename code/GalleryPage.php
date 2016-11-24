@@ -7,6 +7,14 @@
  */
 class GalleryPage extends Page
 {
+	/**
+	 * If true, require Bootstrap's CSS and JS files from this module's vendor folder. If you have already included
+	 * bootstrap in your theme, keep this off.
+	 *
+	 * @conf bool
+	 */
+	private static $require_bootstrap = false;
+	
 	private static $many_many = array(
 		'Images' => 'Image',
 	);
@@ -27,7 +35,7 @@ class GalleryPage extends Page
 		return 'Galleriasivut';
 	}
 	
-	function getCMSFields()
+	public function getCMSFields()
 	{
 		$fields = parent::getCMSFields();
 		$fields->removeFieldFromTab('Root.Main', 'RightContent');
@@ -49,18 +57,6 @@ class GalleryPage extends Page
 		return $fields;
 	}
 	
-	public function leftImages() //TODO: Are these used anywhere?? If not, remove them.
-	{
-		$count = $this->Images()->Count();
-		return $this->Images('','','', floor($count/2));
-	}
-	
-	public function rightImages() //TODO: Are these used anywhere?? If not, remove them.
-	{
-		$count = $this->Images()->Count();
-		return $this->Images('','','', floor($count/2).','.floor($count/2+1));
-	}
-	
 }
 
 class GalleryPage_Controller extends Page_Controller
@@ -74,6 +70,17 @@ class GalleryPage_Controller extends Page_Controller
 		Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
 		Requirements::javascript('simplegallery/js/modernizr.custom.js');
 		Requirements::javascript('simplegallery/js/lightbox-2.6.min.js');
+		$this->RequireBootstrap();
+	}
+	
+	private function RequireBootstrap()
+	{
+		if (GalleryPage::config()->get('require_bootstrap'))
+		{
+			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap.min.css');
+			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap-theme.min.css');
+			Requirements::javascript('simplegallery/vendor/bootstrap/js/bootstrap.min.js');
+		}
 	}
 }
 
