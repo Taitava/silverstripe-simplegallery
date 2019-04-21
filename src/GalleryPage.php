@@ -1,5 +1,18 @@
 <?php
 
+namespace Taitava\SimpleGallery;
+
+use Bummzack\SortableFile\Forms\SortableUploadField;
+use Page;
+use PageController;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\Tab;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\DataList;
+use SilverStripe\View\Requirements;
+
 /**
  * Class GalleryPage
  *
@@ -92,9 +105,10 @@ class GalleryPage extends Page
 			$grid_field = new GridField('GalleryImageGroups', 'Kuvaryhmät', $this->GalleryImageGroups(), $grid_field_config);
 			$fields->addFieldToTab('Root', new Tab('GalleryImageGroups', 'Kuvaryhmät'));
 			$fields->addFieldToTab('Root.GalleryImageGroups', $grid_field);
-			if (ClassInfo::exists('GridFieldSortableRows'))
+			$sortable_rows_class = '\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows'; // Do not use GridFieldSortableRows::class because the class does not always exist as it belongs to an optional module.
+			if (ClassInfo::exists($sortable_rows_class))
 			{
-				$grid_field_config->addComponent(new GridFieldSortableRows('SortOrder'));
+				$grid_field_config->addComponent(new $sortable_rows_class('SortOrder'));
 			}
 		}
 		
@@ -172,7 +186,7 @@ class GalleryPage extends Page
 	}
 }
 
-class GalleryPage_Controller extends Page_Controller
+class GalleryPage_Controller extends PageController
 {
 	public function init()
 	{

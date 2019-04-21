@@ -1,5 +1,7 @@
 <?php
 
+namespace Taitava\SimpleGallery;
+
 /**
  * Class GalleryImage
  *

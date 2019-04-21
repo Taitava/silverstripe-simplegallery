@@ -1,5 +1,11 @@
 <?php
 
+namespace Taitava\SimpleGallery;
+
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\DataObject;
+
 /**
  * Class GalleryImageGroup
  * @method DataList Images()

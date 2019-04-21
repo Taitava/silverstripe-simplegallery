@@ -1,5 +1,12 @@
 <?php
 
+namespace Taitava\SimpleGallery;
+
+use SilverStripe\Assets\Image;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Class GalleryImageExtension
  *
