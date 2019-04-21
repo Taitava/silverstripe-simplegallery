@@ -5,6 +5,7 @@ namespace Taitava\SimpleGallery;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use Page;
 use PageController;
+use SilverStripe\Assets\Image;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
@@ -68,8 +69,8 @@ class GalleryPage extends Page
 	private static $allow_direct_images = false;
 	
 	private static $many_many = [
-		'Images' => 'Image',
-		'GalleryImageGroups' => 'GalleryImageGroup',
+		'Images' => Image::class,
+		'GalleryImageGroups' => GalleryImageGroup::class,
 	];
 	
 	private static $many_many_extraFields = [

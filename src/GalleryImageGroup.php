@@ -2,6 +2,7 @@
 
 namespace Taitava\SimpleGallery;
 
+use SilverStripe\Assets\Image;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
@@ -26,7 +27,7 @@ class GalleryImageGroup extends DataObject
 	];
 	
 	private static $many_many = [
-		'Images' => 'Image',
+		'Images' => Image::class,
 	];
 	
 	private static $many_many_extraFields = [
@@ -36,7 +37,7 @@ class GalleryImageGroup extends DataObject
 	];
 	
 	private static $belongs_many_many = [
-		'GalleryPages' => 'GalleryPage',
+		'GalleryPages' => GalleryPage::class,
 	];
 	
 	private static $field_labels = [

@@ -20,8 +20,8 @@ class GalleryImageExtension extends DataExtension
 	];
 	
 	private static $belongs_many_many = [
-		'GalleryPage' => 'GalleryPage',
-		'GalleryImageGroups' => 'GalleryImageGroup',
+		'GalleryPage' => GalleryPage::class,
+		'GalleryImageGroups' => GalleryImageGroup::class,
 	];
 	
 	public function updateCMSFields(FieldList $fields)
