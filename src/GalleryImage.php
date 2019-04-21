@@ -2,6 +2,8 @@
 
 namespace Taitava\SimpleGallery;
 
+use SilverStripe\Core\Config\Configurable;
+
 /**
  * Class GalleryImage
  *
@@ -19,8 +21,10 @@ namespace Taitava\SimpleGallery;
  *   thumbnail_height: *your-custom-value*
  *
  */
-class GalleryImage extends Object
+class GalleryImage
 {
+	use Configurable;
+	
 	/**
 	 * @conf int
 	 */
