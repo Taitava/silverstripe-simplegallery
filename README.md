@@ -4,7 +4,7 @@ Uses [lightbox 2](http://lokeshdhakar.com/projects/lightbox2/) to create a simpl
 
 Sorry, a better readme is still under construction.
 
-This is compatible with SilverStripe 3. Any volunteers for checking the compatibility for SilverStripe 4? :)
+This is compatible with SilverStripe 4. If you need to use this with SilverStripe 3, check release line 2.x for older versions.
 
 ## Configuration options
 
