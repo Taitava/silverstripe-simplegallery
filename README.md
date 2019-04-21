@@ -11,14 +11,14 @@ This is compatible with SilverStripe 4. If you need to use this with SilverStrip
 These are the default values:
 
 ```YAML
-GalleryPage:
+Taitava\SimpleGallery\GalleryPage:
   use_bootstrap: true
   use_flexbox: true #Better center images vertically and horizontally. Newest browsers support this in 2016.
   require_bootstrap: false #Set to true if your theme does not include bootstrap already and if you want the module to inject boostrap classes to the GalleryPage. Has no effect if use_boostrap is false.
   allow_image_groups: false #If true, GalleryPages can be divided to multiple sections containing their own sets of images
   allow_direct_images: false #If true, in addition to putting images to groups, they can be directly linked to GalleryPage. If allow_image_groups is false, then this option is always true!
   
-GalleryImage:
+Taitava\SimpleGallery\GalleryImage:
   thumbnail_width: *your-custom-value in px*
   thumbnail_cols:
     xs: *your custom value from 1 to 12*
