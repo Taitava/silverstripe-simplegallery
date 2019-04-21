@@ -21,6 +21,8 @@ use SilverStripe\View\Requirements;
  */
 class GalleryPage extends Page
 {
+	private static $table_name = 'GalleryPage';
+	
 	/**
 	 * Whether to inject bootstrap CSS classes to GalleryPage content. You can perform well without this if you
 	 * set 'use_flexbox' to true, but only newest browsers support that. Both 'use_bootstrap' and 'use_flexbox' can

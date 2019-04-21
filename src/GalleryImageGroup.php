@@ -15,6 +15,8 @@ use SilverStripe\ORM\DataObject;
  */
 class GalleryImageGroup extends DataObject
 {
+	private static $table_name = 'GalleryImageGroup';
+	
 	private static $singular_name = 'Kuvaryhmä';
 	
 	private static $plural_name = 'Kuvaryhmät';
