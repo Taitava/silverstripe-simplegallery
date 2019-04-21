@@ -183,8 +183,6 @@ class GalleryPage extends Page
 		$upload_field->setAllowedMaxFileNumber(1000);
 		$upload_field->setFolderName('Galleria');
 		$upload_field->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif', 'tiff']);
-		$upload_field->setPreviewMaxWidth(126);
-		$upload_field->setPreviewMaxHeight(123);
 		return $upload_field;
 	}
 }
