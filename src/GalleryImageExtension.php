@@ -15,19 +15,19 @@ use SilverStripe\ORM\DataExtension;
 class GalleryImageExtension extends DataExtension
 {
 	
-	private static $db = array(
+	private static $db = [
 		'Caption'	=> 'Text',
-	);
+	];
 	
-	private static $belongs_many_many = array(
+	private static $belongs_many_many = [
 		'GalleryPage' => 'GalleryPage',
 		'GalleryImageGroups' => 'GalleryImageGroup',
-	);
+	];
 	
 	public function updateCMSFields(FieldList $fields)
 	{
 		$fields->addFieldToTab('Root.Main', new TextField('Caption', 'Kuvateksti'), 'Title');
-		$fields->removeFieldsFromTab('Root.Main', array('Title','Name','OwnerID','ParentID'));
+		$fields->removeFieldsFromTab('Root.Main', ['Title', 'Name', 'OwnerID', 'ParentID']);
 	}
 	
 	public function GalleryThumbnail()

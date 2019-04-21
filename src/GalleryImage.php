@@ -33,7 +33,7 @@ class GalleryImage
 	/**
 	 * @conf int
 	 */
-	private static $thumbnail_cols		= array('xs' => 12, 'sm' => 3, 'md' => 3, 'lg' => 2, 'xl' => 1);
+	private static $thumbnail_cols		= ['xs' => 12, 'sm' => 3, 'md' => 3, 'lg' => 2, 'xl' => 1];
 	
 	/**
 	 * @conf int

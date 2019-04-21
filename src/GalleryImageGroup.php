@@ -19,37 +19,37 @@ class GalleryImageGroup extends DataObject
 	
 	private static $plural_name = 'Kuvaryhmät';
 	
-	private static $db = array(
+	private static $db = [
 		'Title' => 'Varchar(255)',
-	);
+	];
 	
-	private static $many_many = array(
+	private static $many_many = [
 		'Images' => 'Image',
-	);
+	];
 	
-	private static $many_many_extraFields = array(
-		'Images' => array(
+	private static $many_many_extraFields = [
+		'Images' => [
 			'SortOrder' => 'Int',
-		),
-	);
+		],
+	];
 	
-	private static $belongs_many_many = array(
+	private static $belongs_many_many = [
 		'GalleryPages' => 'GalleryPage',
-	);
+	];
 	
-	private static $field_labels = array(
+	private static $field_labels = [
 		'Title' => 'Otsikko',
 		'Images' => 'Kuvat',
-	);
+	];
 	
 	public function getCMSFields()
 	{
 		$fields = parent::getCMSFields();
 		
-		$fields->addFieldsToTab('Root.Main', array(
+		$fields->addFieldsToTab('Root.Main', [
 			new TextField('Title', 'Otsikko'),
 			GalleryPage::NewUploadField(),
-		));
+		]);
 		
 		return $fields;
 	}

@@ -65,19 +65,19 @@ class GalleryPage extends Page
 	 */
 	private static $allow_direct_images = false;
 	
-	private static $many_many = array(
+	private static $many_many = [
 		'Images' => 'Image',
 		'GalleryImageGroups' => 'GalleryImageGroup',
-	);
+	];
 	
-	private static $many_many_extraFields = array(
-		'Images' => array(
+	private static $many_many_extraFields = [
+		'Images' => [
 			'SortOrder' => 'Int',
-		),
-		'GalleryImageGroups' => array(
+		],
+		'GalleryImageGroups' => [
 			'SortOrder' => 'Int',
-		),
-	);
+		],
+	];
 	
 	public function singular_name()
 	{
@@ -142,21 +142,21 @@ class GalleryPage extends Page
 	 */
 	public function GroupedImages()
 	{
-		$images = array();
+		$images = [];
 		if ($this->Images()->exists())
 		{
-			$images[] = array(
+			$images[] = [
 				'Title' => '',
 				'Images' => new ArrayList($this->Images()->sort('SortOrder')->toArray()),
-			);
+			];
 		}
 		/** @var GalleryImageGroup $group */
 		foreach ($this->GalleryImageGroups()->sort('SortOrder') as $group)
 		{
-			$images[] = array(
+			$images[] = [
 				'Title' => $group->Title,
 				'Images' => new ArrayList($group->Images()->sort('SortOrder')->toArray()),
-			);
+			];
 		}
 		return new ArrayList($images);
 	}
@@ -179,7 +179,7 @@ class GalleryPage extends Page
 		);
 		$upload_field->setAllowedMaxFileNumber(1000);
 		$upload_field->setFolderName('Galleria');
-		$upload_field->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif', 'tiff'));
+		$upload_field->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif', 'tiff']);
 		$upload_field->setPreviewMaxWidth(126);
 		$upload_field->setPreviewMaxHeight(123);
 		return $upload_field;
