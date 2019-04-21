@@ -189,14 +189,16 @@ class GalleryPage extends Page
 
 class GalleryPageController extends PageController
 {
+	const MODULE = 'taitava/silverstripe-simplegallery: ';
+	
 	public function init()
 	{
 		parent::init();
 		
-		Requirements::css('simplegallery/vendor/lightbox/dist/css/lightbox.min.css');
-		Requirements::css('simplegallery/css/gallery.css');
-		Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
-		Requirements::javascript('simplegallery/vendor/lightbox/dist/js/lightbox.min.js');
+		Requirements::css(static::MODULE .'vendor/lightbox/dist/css/lightbox.min.css');
+		Requirements::css(static::MODULE .'css/gallery.css');
+		Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.min.js');
+		Requirements::javascript(static::MODULE .'vendor/lightbox/dist/js/lightbox.min.js');
 		$this->RequireBootstrap();
 		$this->RequireFlexbox();
 	}
@@ -205,9 +207,9 @@ class GalleryPageController extends PageController
 	{
 		if (GalleryPage::config()->get('require_bootstrap') && GalleryPage::config()->get('use_bootstrap'))
 		{
-			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap.min.css');
-			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap-theme.min.css');
-			Requirements::javascript('simplegallery/vendor/bootstrap/js/bootstrap.min.js');
+			Requirements::css(static::MODULE .'vendor/bootstrap/css/bootstrap.min.css');
+			Requirements::css(static::MODULE .'vendor/bootstrap/css/bootstrap-theme.min.css');
+			Requirements::javascript(static::MODULE .'vendor/bootstrap/js/bootstrap.min.js');
 		}
 	}
 	
@@ -215,7 +217,7 @@ class GalleryPageController extends PageController
 	{
 		if (GalleryPage::config()->get('use_flexbox'))
 		{
-			Requirements::css('simplegallery/css/flexbox.css');
+			Requirements::css(static::MODULE .'css/flexbox.css');
 		}
 	}
 }
