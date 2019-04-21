@@ -186,7 +186,7 @@ class GalleryPage extends Page
 	}
 }
 
-class GalleryPage_Controller extends PageController
+class GalleryPageController extends PageController
 {
 	public function init()
 	{
