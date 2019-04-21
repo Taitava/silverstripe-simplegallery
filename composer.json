@@ -1,11 +1,11 @@
 {
   "name": "taitava/silverstripe-simplegallery",
   "description": "",
-  "type": "silverstripe-module",
+  "type": "silverstripe-vendormodule",
   "license": "MIT",
   "require": {
-    "silverstripe/framework": "~3.1",
-    "silverstripe/cms": "~3.1",
+    "silverstripe/framework": "~4.0",
+    "silverstripe/cms": "~4.0",
     "bummzack/sortablefile": "*"
   },
   "keywords": ["gallery","image"],
@@ -16,7 +16,11 @@
     "role": "Developer"
   }],
   "extra": {
-    "installer-name": "simplegallery"
+    "installer-name": "simplegallery",
+    "expose": [
+      "css",
+      "vendor"
+    ]
   },
   "suggest": {
     "undefinedoffset/sortablegridfield": "Makes it possible to drag & drop image groups to different order. Not needed if you do not use image groups at all."

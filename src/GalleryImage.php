@@ -1,5 +1,9 @@
 <?php
 
+namespace Taitava\SimpleGallery;
+
+use SilverStripe\Core\Config\Configurable;
+
 /**
  * Class GalleryImage
  *
@@ -17,8 +21,10 @@
  *   thumbnail_height: *your-custom-value*
  *
  */
-class GalleryImage extends Object
+class GalleryImage
 {
+	use Configurable;
+	
 	/**
 	 * @conf int
 	 */
@@ -27,7 +33,7 @@ class GalleryImage extends Object
 	/**
 	 * @conf int
 	 */
-	private static $thumbnail_cols		= array('xs' => 12, 'sm' => 3, 'md' => 3, 'lg' => 2, 'xl' => 1);
+	private static $thumbnail_cols		= ['xs' => 12, 'sm' => 3, 'md' => 3, 'lg' => 2, 'xl' => 1];
 	
 	/**
 	 * @conf int

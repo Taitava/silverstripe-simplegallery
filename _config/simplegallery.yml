@@ -1,3 +1,6 @@
-Image:
+---
+Name: simplegalleryconfig
+---
+SilverStripe\Assets\Image:
   extensions:
-    - GalleryImageExtension
+    - Taitava\SimpleGallery\GalleryImageExtension

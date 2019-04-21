@@ -1,5 +1,19 @@
 <?php
 
+namespace Taitava\SimpleGallery;
+
+use Bummzack\SortableFile\Forms\SortableUploadField;
+use Page;
+use PageController;
+use SilverStripe\Assets\Image;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\Tab;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\DataList;
+use SilverStripe\View\Requirements;
+
 /**
  * Class GalleryPage
  *
@@ -8,6 +22,8 @@
  */
 class GalleryPage extends Page
 {
+	private static $table_name = 'GalleryPage';
+	
 	/**
 	 * Whether to inject bootstrap CSS classes to GalleryPage content. You can perform well without this if you
 	 * set 'use_flexbox' to true, but only newest browsers support that. Both 'use_bootstrap' and 'use_flexbox' can
@@ -52,19 +68,19 @@ class GalleryPage extends Page
 	 */
 	private static $allow_direct_images = false;
 	
-	private static $many_many = array(
-		'Images' => 'Image',
-		'GalleryImageGroups' => 'GalleryImageGroup',
-	);
+	private static $many_many = [
+		'Images' => Image::class,
+		'GalleryImageGroups' => GalleryImageGroup::class,
+	];
 	
-	private static $many_many_extraFields = array(
-		'Images' => array(
+	private static $many_many_extraFields = [
+		'Images' => [
 			'SortOrder' => 'Int',
-		),
-		'GalleryImageGroups' => array(
+		],
+		'GalleryImageGroups' => [
 			'SortOrder' => 'Int',
-		),
-	);
+		],
+	];
 	
 	public function singular_name()
 	{
@@ -92,9 +108,10 @@ class GalleryPage extends Page
 			$grid_field = new GridField('GalleryImageGroups', 'Kuvaryhmät', $this->GalleryImageGroups(), $grid_field_config);
 			$fields->addFieldToTab('Root', new Tab('GalleryImageGroups', 'Kuvaryhmät'));
 			$fields->addFieldToTab('Root.GalleryImageGroups', $grid_field);
-			if (ClassInfo::exists('GridFieldSortableRows'))
+			$sortable_rows_class = '\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows'; // Do not use GridFieldSortableRows::class because the class does not always exist as it belongs to an optional module.
+			if (ClassInfo::exists($sortable_rows_class))
 			{
-				$grid_field_config->addComponent(new GridFieldSortableRows('SortOrder'));
+				$grid_field_config->addComponent(new $sortable_rows_class('SortOrder'));
 			}
 		}
 		
@@ -128,21 +145,21 @@ class GalleryPage extends Page
 	 */
 	public function GroupedImages()
 	{
-		$images = array();
+		$images = [];
 		if ($this->Images()->exists())
 		{
-			$images[] = array(
+			$images[] = [
 				'Title' => '',
 				'Images' => new ArrayList($this->Images()->sort('SortOrder')->toArray()),
-			);
+			];
 		}
 		/** @var GalleryImageGroup $group */
 		foreach ($this->GalleryImageGroups()->sort('SortOrder') as $group)
 		{
-			$images[] = array(
+			$images[] = [
 				'Title' => $group->Title,
 				'Images' => new ArrayList($group->Images()->sort('SortOrder')->toArray()),
-			);
+			];
 		}
 		return new ArrayList($images);
 	}
@@ -165,23 +182,23 @@ class GalleryPage extends Page
 		);
 		$upload_field->setAllowedMaxFileNumber(1000);
 		$upload_field->setFolderName('Galleria');
-		$upload_field->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif', 'tiff'));
-		$upload_field->setPreviewMaxWidth(126);
-		$upload_field->setPreviewMaxHeight(123);
+		$upload_field->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif', 'tiff']);
 		return $upload_field;
 	}
 }
 
-class GalleryPage_Controller extends Page_Controller
+class GalleryPageController extends PageController
 {
+	const MODULE = 'taitava/silverstripe-simplegallery: ';
+	
 	public function init()
 	{
 		parent::init();
 		
-		Requirements::css('simplegallery/vendor/lightbox/dist/css/lightbox.min.css');
-		Requirements::css('simplegallery/css/gallery.css');
-		Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
-		Requirements::javascript('simplegallery/vendor/lightbox/dist/js/lightbox.min.js');
+		Requirements::css(static::MODULE .'vendor/lightbox/dist/css/lightbox.min.css');
+		Requirements::css(static::MODULE .'css/gallery.css');
+		Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.min.js');
+		Requirements::javascript(static::MODULE .'vendor/lightbox/dist/js/lightbox.min.js');
 		$this->RequireBootstrap();
 		$this->RequireFlexbox();
 	}
@@ -190,9 +207,9 @@ class GalleryPage_Controller extends Page_Controller
 	{
 		if (GalleryPage::config()->get('require_bootstrap') && GalleryPage::config()->get('use_bootstrap'))
 		{
-			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap.min.css');
-			Requirements::css('simplegallery/vendor/bootstrap/css/bootstrap-theme.min.css');
-			Requirements::javascript('simplegallery/vendor/bootstrap/js/bootstrap.min.js');
+			Requirements::css(static::MODULE .'vendor/bootstrap/css/bootstrap.min.css');
+			Requirements::css(static::MODULE .'vendor/bootstrap/css/bootstrap-theme.min.css');
+			Requirements::javascript(static::MODULE .'vendor/bootstrap/js/bootstrap.min.js');
 		}
 	}
 	
@@ -200,7 +217,7 @@ class GalleryPage_Controller extends Page_Controller
 	{
 		if (GalleryPage::config()->get('use_flexbox'))
 		{
-			Requirements::css('simplegallery/css/flexbox.css');
+			Requirements::css(static::MODULE .'css/flexbox.css');
 		}
 	}
 }
