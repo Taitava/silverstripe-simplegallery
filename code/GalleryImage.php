@@ -1,5 +1,8 @@
 <?php
 
+// Support SilverStripe versions lower than 3.7:
+if (!class_exists('SS_Object')) class_alias('Object', 'SS_Object');
+
 /**
  * Class GalleryImage
  *
@@ -17,7 +20,7 @@
  *   thumbnail_height: *your-custom-value*
  *
  */
-class GalleryImage extends Object
+class GalleryImage extends SS_Object // If SilverStripe version is lower than 3.7, SS_Object will be an alias for Object class. In SS 3.7 SS_Object is a real class.
 {
 	/**
 	 * @conf int
